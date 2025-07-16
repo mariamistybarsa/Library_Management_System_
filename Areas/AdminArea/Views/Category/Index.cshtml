@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Library_Management_System.Models.CategoryModel>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Index";
+}
+
+<h2>Category List</h2>
+<a asp-area="AdminArea" asp-controller="Category" asp-action="Create" class="btn btn-primary mb-2">Add Category</a>
+
+<table class="table table-bordered" id="CategoryTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script src="~/js/category.js"></script>
+}
