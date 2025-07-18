@@ -19,9 +19,37 @@ namespace Library_Management_System.Areas.AdminArea.Controllers
 
         public async Task<IActionResult> IndexBook()
         {
-            var books = await _db.Books.Include(b => b.Category).ToListAsync();
-            return View(books);
+            //var books = await _db.Books.Include(b => b.Category).ToListAsync();
+            return View();
         }
+        public async Task<IActionResult> GetBook()
+        {
+            var books = await _db.Books.Include(b => b.Category).ToListAsync();
+
+            if (ModelState.IsValid)
+            {
+                var result = books.Select(b => new
+                {
+                    b.BookId,
+                    b.Title,
+                    b.Author,
+                    b.ISBN,
+                    b.Publisher,
+                    PublishedDate = b.PublishedDate,
+                    categoryName = b.Category != null ? b.Category.CategoryName : "",
+                    coverImagePath = b.CoverImagePath,
+                    b.TotalCopies,
+                    b.AvailableCopies
+                });
+
+                return Json(result);
+            }
+
+            return Json(new { error = "Invalid model state" });
+        }
+
+
+
 
         [HttpGet]
         public IActionResult CreateBook()
@@ -64,5 +92,8 @@ namespace Library_Management_System.Areas.AdminArea.Controllers
             ViewBag.Categories = _db.Categories.ToList();
             return View(d);
         }
+
+       
+
     }
 }

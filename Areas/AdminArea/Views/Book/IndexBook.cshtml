@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<Library_Management_System.Models.Book>
 
 @{
-    ViewData["Title"] = "All Books";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Index";
 }
+
 
 <h2 class="my-3">Book List</h2>
 
@@ -10,7 +12,7 @@
     <a asp-action="CreateBook" class="btn btn-primary mb-3">Add New Book</a>
 </p>
 
-<table class="table table-bordered table-striped text-center align-middle">
+<table class="table table-bordered table-striped text-center align-middle" id="BookTable">
     <thead class="table-dark">
         <tr>
             <th>Title</th>
@@ -25,8 +27,25 @@
             <th>Actions</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model)
+</table>
+<!-- ✅ Modal for Book Details (Place inside this View) -->
+<div class="modal fade" id="bookDetailsModal" tabindex="-1" aria-labelledby="bookDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookDetailsLabel">Book Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="bookDetailsContent">
+                <!-- AJAX content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    @* <tbody> *@
+    @*     @foreach (var item in Model)
         {
             <tr>
                 <td>@item.Title</td>
@@ -56,4 +75,9 @@
             </tr>
         }
     </tbody>
-</table>
+     *@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section Scripts{
+
+<script src="~/js/book.js"></script>
+}

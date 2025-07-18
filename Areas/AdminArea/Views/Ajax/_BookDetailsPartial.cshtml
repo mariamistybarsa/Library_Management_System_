@@ -1,0 +1,22 @@
+﻿@model Library_Management_System.Models.Book
+
+<div class="modal-header">
+    <h5 class="modal-title">@Model.Title</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <p><strong>Author:</strong> @Model.Author</p>
+    <p><strong>ISBN:</strong> @Model.ISBN</p>
+    <p><strong>Publisher:</strong> @Model.Publisher</p>
+    <p><strong>Published Date:</strong> @Model.PublishedDate?.ToString("yyyy-MM-dd")</p>
+    <p><strong>Category:</strong> @Model.Category?.CategoryName</p>
+    <p><strong>Total Copies:</strong> @Model.TotalCopies</p>
+    <p><strong>Available Copies:</strong> @Model.AvailableCopies</p>
+    @if (!string.IsNullOrEmpty(Model.CoverImagePath))
+    {
+        <img src="@Model.CoverImagePath" width="120" class="img-thumbnail" />
+    }
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
