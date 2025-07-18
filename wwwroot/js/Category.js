@@ -1,11 +1,13 @@
-﻿$(document).ready(function () {
+﻿//Category.js
+
+$(document).ready(function () {
     CategoryDataTable();
 });
 
 function CategoryDataTable() {
     $('#CategoryTable').DataTable({
         processing: true,
-        serverside: false,
+        serverSide: false,
         ajax:
         {
             url: '/AdminArea/Category/GetCategory',

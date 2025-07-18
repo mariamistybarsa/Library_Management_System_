@@ -28,6 +28,13 @@
 
   <ItemGroup>
     <Folder Include="Areas\UserArea\Controllers\" />
+    <Folder Include="Views\Book\" />
+    <Folder Include="wwwroot\images\covers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\Category.js" />
+    <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
 </Project>

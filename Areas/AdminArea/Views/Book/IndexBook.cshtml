@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Library_Management_System.Models.Book>
+
+@{
+    ViewData["Title"] = "All Books";
+}
+
+<h2 class="my-3">Book List</h2>
+
+<p>
+    <a asp-action="CreateBook" class="btn btn-primary mb-3">Add New Book</a>
+</p>
+
+<table class="table table-bordered table-striped text-center align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Publisher</th>
+            <th>Published Date</th>
+            <th>Category</th>
+            <th>Cover</th>
+            <th>Total Copies</th>
+            <th>Available</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.ISBN</td>
+                <td>@item.Publisher</td>
+                <td>@item.PublishedDate?</td>
+                <td>@item.Category?.CategoryName</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.CoverImagePath))
+                    {
+                        <img src="@item.CoverImagePath" width="60" height="80" class="img-thumbnail" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+
+                </td>
+                <td>@item.TotalCopies</td>
+                <td>@item.AvailableCopies</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-sm btn-info mx-1">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

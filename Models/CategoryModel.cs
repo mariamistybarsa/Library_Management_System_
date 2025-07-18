@@ -6,11 +6,11 @@ namespace Library_Management_System.Models
     {
         [Key]
         public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        public string? CategoryName { get; set; }
 
-        public string CategoryDescription { get; set; }
+        public string? CategoryDescription { get; set; }
 
-        
+
         //public List<Book> Books { get; set; }
 
 

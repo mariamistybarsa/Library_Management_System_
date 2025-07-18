@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="~/Admin/dist/css/adminlte.min.css">
 
     <link href="~/datatable/datatables.min.css" rel="stylesheet" />
+    <script src="~/js/site.js"></script>
+
 </head>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -32,7 +34,7 @@
                 </li>
 
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a class="nav-link" asp-controller="Book" asp-action="Index">Book</a>
+                    <a class="nav-link" asp-area="AdminArea" asp-controller="Book" asp-action="IndexBook">Book</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a class="nav-link" asp-controller="BorrowRecord" asp-action="Create">BorrowRecord</a>
