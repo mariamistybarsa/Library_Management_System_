@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\UserArea\Controllers\" />
     <Folder Include="Views\Book\" />
     <Folder Include="wwwroot\images\covers\" />
   </ItemGroup>
