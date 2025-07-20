@@ -1,9 +1,40 @@
 ﻿@{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+ 
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
+</div>
+@{
+    ViewData["Title"] = "Welcome to Library";
+}
+
+<div class="container mt-5">
+    <div id="libraryCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/images/Library_Cover/library6.jpg" class="d-block w-100" alt="Library 1" style="height: 500px; object-fit: cover;">
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/Library_Cover/library2.jpg" class="d-block w-100" alt="Library 2" style="height: 500px; object-fit: cover;">
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/Library_Cover/library3.jpg" class="d-block w-100" alt="Library 3" style="height: 500px; object-fit: cover;">
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/Library_Cover/library5.jpg" class="d-block w-100" alt="Library 3" style="height: 500px; object-fit: cover;">
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#libraryCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#libraryCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 </div>

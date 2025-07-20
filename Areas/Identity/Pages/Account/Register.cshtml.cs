@@ -123,7 +123,7 @@ namespace Library_Management_System.Areas.Identity.Pages.Account
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     if (Input.Role == "Admin")
                     {
-                        return RedirectToAction("IndexBook", "Book", new { area = "AdminArea" });
+                        return RedirectToAction("Index", "Home", new { area = "AdminArea" });
                     }
                     if (Input.Role == "Customer")
                     {

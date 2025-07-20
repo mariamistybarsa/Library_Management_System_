@@ -11,7 +11,7 @@ namespace Library_Management_System.Data
         { }
             public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<Book> Books { get; set; }
-        //public DbSet<BorrowRecord> BorrowRecords { get; set; }
+       
 
         //public DbSet<Book> Books { get; set; }
     }
