@@ -1,0 +1,96 @@
+﻿@model Library_Management_System.Models.Book
+
+<form id="editBookForm" class="needs-validation" novalidate>
+    <input type="hidden" asp-for="BookId" />
+
+    <div class="row g-3">
+
+        <div class="col-md-6">
+            <label asp-for="Title" class="form-label fw-semibold"></label>
+            <input asp-for="Title" class="form-control" placeholder="Enter book title" required />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Author" class="form-label fw-semibold"></label>
+            <input asp-for="Author" class="form-control" placeholder="Enter author name" required />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="ISBN" class="form-label fw-semibold"></label>
+            <input asp-for="ISBN" class="form-control" placeholder="Enter ISBN number" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Publisher" class="form-label fw-semibold"></label>
+            <input asp-for="Publisher" class="form-control" placeholder="Enter publisher name" />
+            <span asp-validation-for="Publisher" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="PublishedDate" class="form-label fw-semibold"></label>
+            <input asp-for="PublishedDate" type="date" class="form-control" />
+            <span asp-validation-for="PublishedDate" class="text-danger"></span>
+        </div>
+
+        
+
+            <div class="col-md-6">
+                <label asp-for="CategoryId" class="form-label fw-semibold">Category</label>
+                <select asp-for="CategoryId" class="form-select" required>
+                    <option value="">-- Select Category --</option>
+                    @foreach (var c in ViewBag.Categories)
+                    {
+                        <option value="@c.CategoryId">@c.CategoryName</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+        <div class="col-md-6">
+            <label asp-for="TotalCopies" class="form-label fw-semibold"></label>
+            <input asp-for="TotalCopies" type="number" min="0" class="form-control" placeholder="Total copies available" required />
+            <span asp-validation-for="TotalCopies" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="AvailableCopies" class="form-label fw-semibold"></label>
+            <input asp-for="AvailableCopies" type="number" min="0" class="form-control" placeholder="Available copies" required />
+            <span asp-validation-for="AvailableCopies" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="CoverImagePath" class="form-label fw-semibold">Cover Image URL</label>
+            <input asp-for="CoverImagePath" class="form-control" placeholder="Enter image URL or path" />
+            <span asp-validation-for="CoverImagePath" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success me-2 px-4">Save</button>
+        <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

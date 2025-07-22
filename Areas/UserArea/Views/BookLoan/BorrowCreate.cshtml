@@ -1,0 +1,16 @@
+﻿@model Library_Management_System.ViewModel.BookLoanViewModel
+
+<h2>Borrow Confirmation</h2>
+
+<form asp-action="BorrowCreate" method="post">
+    <input type="hidden" asp-for="BookId" />
+
+    <p>Book: @Model.Book.Title</p>
+
+    <input asp-for="BorrowDate" type="date" class="form-control" />
+    <input asp-for="ReturnDate" type="date" class="form-control" />
+    
+
+
+    <button type="submit" class="btn btn-success mt-3">Confirm Borrow</button>
+</form>

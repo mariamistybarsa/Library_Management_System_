@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Book\" />
-    <Folder Include="wwwroot\images\covers\" />
     <Folder Include="wwwroot\images\Library_Cover\" />
   </ItemGroup>
 

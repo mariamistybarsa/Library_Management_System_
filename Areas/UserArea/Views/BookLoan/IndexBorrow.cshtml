@@ -1,0 +1,57 @@
+﻿@model List<Library_Management_System.ViewModel.BookLoanViewModel>
+
+@{
+    ViewData["Title"] = "My Borrowed Books";
+}
+
+<a class="btn btn-primary" asp-area="UserArea" asp-controller="BookLoan" asp-action="Booklist">
+    <i class="fas fa-plus"></i> Create
+</a>
+<a class="btn btn-primary" asp-area="UserArea" asp-controller="BookLoan" asp-action="Booklist">
+    <i class="fas fa-plus"></i> BookList
+</a>
+
+
+
+<a class="btn btn-primary" asp-area="UserArea" asp-controller="BookLoan" asp-action="BorrowCreate">
+    <i class="fas fa-plus"></i> CreateBorrow
+</a>
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Book Title</th>
+            <th>Borrow Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-center">You have not borrowed any books.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Book?.Title</td>
+                    <td>@item.BorrowDate.ToString("yyyy-MM-dd")</td>
+                    <td>@(item.ReturnDate.ToString("yyyy-MM-dd") ?? "Not Returned")</td>
+                    <td>
+                        @if (item.ReturnDate == null)
+                        {
+                            <span class="badge bg-warning text-dark">Borrowed</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Returned</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

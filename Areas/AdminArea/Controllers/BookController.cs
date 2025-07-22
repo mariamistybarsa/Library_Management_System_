@@ -92,8 +92,63 @@ namespace Library_Management_System.Areas.AdminArea.Controllers
             ViewBag.Categories = _db.Categories.ToList();
             return View(d);
         }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var book = _db.Books.FirstOrDefault(b => b.BookId == id);
+            if (book == null)
+            {
+                return Json(new { success = false });
+            }
 
-       
+            _db.Books.Remove(book);
+            _db.SaveChanges();
 
+            return Json(new { success = true });
+        }
+
+        [HttpGet]
+        public IActionResult EditPartial(int id)
+        {
+            var book = _db.Books.FirstOrDefault(b => b.BookId == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Categories = _db.Categories.ToList();
+            return PartialView("_EditPartial", book);
+        }
+
+        // POST: AdminArea/Book/SaveBook
+        [HttpPost]
+        public IActionResult SaveBook(Book model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = _db.Categories.ToList();
+                return PartialView("_EditPartial", model);
+            }
+
+            var book = _db.Books.FirstOrDefault(b => b.BookId == model.BookId);
+            if (book == null)
+            {
+                return Json(new { success = false });
+            }
+
+            book.Title = model.Title;
+            book.Author = model.Author;
+            book.ISBN = model.ISBN;
+            book.Publisher = model.Publisher;
+            book.PublishedDate = model.PublishedDate;
+            book.CategoryId = model.CategoryId;
+            book.TotalCopies = model.TotalCopies;
+            book.AvailableCopies = model.AvailableCopies;
+            book.CoverImagePath = model.CoverImagePath;
+
+            _db.SaveChanges();
+
+            return Json(new { success = true });
+        }
     }
 }

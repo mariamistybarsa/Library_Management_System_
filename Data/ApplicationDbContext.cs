@@ -12,7 +12,7 @@ namespace Library_Management_System.Data
             public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<Book> Books { get; set; }
        
-
+        public DbSet<BookLoan> BookLoan { get; set; }
         //public DbSet<Book> Books { get; set; }
     }
 }

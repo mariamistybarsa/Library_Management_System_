@@ -36,10 +36,10 @@ function BookDataTable() {
                 data: 'bookId',
                 render: function (data) {
                     return `
-                        <a href="/Book/Edit/${data}" class="btn btn-sm btn-primary">Edit</a>
-                        <a href="/Book/Delete/${data}" class="btn btn-sm btn-danger">Delete</a>
-                        <a href="javascript:void(0);" class="btn btn-sm btn-info viewDetails" data-id="${data}">Details</a>
-                    `;
+                     <a href="javascript:void(0);" class="btn btn-sm btn-primary editBook" data-id="${data}">Edit</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger deleteBook" data-id="${data}">Delete</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info viewDetails" data-id="${data}">Details</a>
+        `;
                 }
             }
         ]
@@ -64,35 +64,73 @@ $(document).on('click', '.viewDetails', function () {
         }
     });
 });
-//$(document).on('click', '.editBook', function () {
-//    var id = $(this).data('id');
 
-//    $.ajax({
-//        url: '/AdminArea/Book/EditPartial',
-//        type: 'GET',
-//        data: { id: id },
-//        success: function (result) {
-//            $('#bookEditContent').html(result);
-//            $('#bookEditModal').modal('show');
-//        }
-//    });
-//});
+$(document).on('click', '.deleteBook', function () {
 
-//$(document).on('submit', '#editBookForm', function (e) {
-//    e.preventDefault();
-//    var form = $(this);
+    var id = $(this).data('id');
+    console.log("Clicked Delete for ID:", id);
+    if (confirm("Are you sure you want to delete this book?")) {
+        $.ajax({
+            url: '/AdminArea/Book/Delete',
+            type: 'POST',
+            data: { id: id },
+            success: function (res) {
+                if (res.success) {
+                    $('#BookTable').DataTable().ajax.reload(); // Reload table
+                    alert("✅ Book deleted successfully.");
+                } else {
+                    alert("❌ Error deleting book.");
+                }
+            },
+            error: function () {
+                alert("❌ Error deleting book.");
+            }
+        });
+    }
+}
+);
 
-//    $.ajax({
-//        url: '/AdminArea/Book/SaveBook',
-//        type: 'POST',
-//        data: form.serialize(),
-//        success: function (res) {
-//            if (res.success) {
-//                $('#bookEditModal').modal('hide');
-//                $('#BookTable').DataTable().ajax.reload(); // Reload table
-//            } else {
-//                $('#bookEditContent').html(res); // re-render form with errors
-//            }
-//        }
-//    });
-//});
+
+
+
+// Edit Book button click
+$(document).on('click', '.editBook', function () {
+    var id = $(this).data('id');
+
+    $.ajax({
+        url: '/AdminArea/Book/EditPartial',
+        type: 'GET',
+        data: { id: id },
+        success: function (result) {
+            $('#bookEditContent').html(result);
+            $('#bookEditModal').modal('show');
+        },
+        error: function () {
+            alert("❌ Error loading edit form.");
+        }
+    });
+});
+
+// Submit Edit form
+$(document).on('submit', '#editBookForm', function (e) {
+    e.preventDefault();
+    var form = $(this);
+
+    $.ajax({
+        url: '/AdminArea/Book/SaveBook',
+        type: 'POST',
+        data: form.serialize(),
+        success: function (res) {
+            if (res.success) {
+                $('#bookEditModal').modal('hide');
+                $('#BookTable').DataTable().ajax.reload();
+                alert("✅ Book updated successfully.");
+            } else {
+                $('#bookEditContent').html(res);
+            }
+        },
+        error: function () {
+            alert("❌ Error saving book.");
+        }
+    });
+});

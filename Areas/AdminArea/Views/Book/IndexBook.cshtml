@@ -2,9 +2,8 @@
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Book List";
 }
-
 
 <h2 class="my-3">Book List</h2>
 
@@ -28,7 +27,8 @@
         </tr>
     </thead>
 </table>
-<!-- ✅ Modal for Book Details (Place inside this View) -->
+
+<!-- Book Details Modal -->
 <div class="modal fade" id="bookDetailsModal" tabindex="-1" aria-labelledby="bookDetailsLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -37,47 +37,31 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="bookDetailsContent">
-                <!-- AJAX content will be loaded here -->
+                <!-- AJAX loaded content -->
             </div>
         </div>
     </div>
 </div>
 
+<!-- Book Edit Modal -->
+<div class="modal fade" id="bookEditModal" tabindex="-1" aria-labelledby="bookEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookEditModalLabel">Edit Book</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="bookEditContent">
+                <!-- AJAX loaded edit form -->
+            </div>
+        </div>
+    </div>
+</div>
 
-    @* <tbody> *@
-    @*     @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Title</td>
-                <td>@item.Author</td>
-                <td>@item.ISBN</td>
-                <td>@item.Publisher</td>
-                <td>@item.PublishedDate?</td>
-                <td>@item.Category?.CategoryName</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.CoverImagePath))
-                    {
-                        <img src="@item.CoverImagePath" width="60" height="80" class="img-thumbnail" />
-                    }
-                    else
-                    {
-                        <span>No Image</span>
-                    }
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
-                </td>
-                <td>@item.TotalCopies</td>
-                <td>@item.AvailableCopies</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.BookId" class="btn btn-sm btn-warning">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.BookId" class="btn btn-sm btn-info mx-1">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.BookId" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-     *@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@section Scripts{
-
-<script src="~/js/book.js"></script>
+    <script src="~/js/book.js"></script>
 }

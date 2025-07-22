@@ -1,0 +1,7 @@
+﻿@model Library_Management_System.ViewModel.BookLoanViewModel
+
+<h2>Borrow Details</h2>
+
+<p><strong>Book:</strong> @Model.Book.Title</p>
+<p><strong>Borrow Date:</strong> @Model.BorrowDate.ToShortDateString()</p>
+<p><strong>Return Date:</strong> @Model.ReturnDate.ToShortDateString()</p>
