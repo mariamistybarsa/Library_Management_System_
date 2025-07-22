@@ -1,76 +1,113 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿//BookLoanController
 using Library_Management_System.Data;
-using Library_Management_System.ViewModel;
-using System.Security.Claims;
 using Library_Management_System.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Library_Management_System.Areas.UserArea.Controllers
 {
     [Area("UserArea")]
+
     public class BookLoanController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public BookLoanController(ApplicationDbContext context)
+        public BookLoanController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-
-        // ✅ Index Method
-     
+        public async Task<IActionResult> IndexBook()
+        {
+            var books = await _context.Books.Where(b => b.AvailableCopies > 0).ToListAsync();
+            return View(books);
+        }
         public IActionResult BookList()
         {
             var books = _context.Books
-                .Where(b => b.AvailableCopies > 0) // Optional: show only available books
+                .Where(b => b.AvailableCopies > 0) 
                 .ToList();
 
             return View(books);
         }
-        [HttpGet]
-        public IActionResult BorrowCreate(int id)
+
+        public async Task<IActionResult> LoanBook(int id)
         {
-            var book = _context.Books.FirstOrDefault(b => b.BookId == id);
-            if (book == null || book.AvailableCopies <= 0)
-                return NotFound();
-
-            var model = new BookLoanViewModel
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.BookId == id);
+            if (book == null || book.TotalCopies <= 0)
             {
-                BookId = book.BookId,
-                Book = book,
-                BorrowDate = DateTime.Now,
-                ReturnDate = DateTime.Now.AddDays(7) // optional default
-            };
-
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult BorrowCreate(BookLoanViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                var borrow = new BookLoan
-                {
-                    BookId = model.BookId,
-                    BorrowDate = model.BorrowDate,
-                    ReturnDate = model.ReturnDate,
-                    UserId = userId
-                };
-
-                _context.BookLoan.Add(borrow);
-                _context.SaveChanges();
-
-                return RedirectToAction("BorrowDetails", new { id = borrow.BookLoanId });
+                TempData["ErrorMessage"] = "Book is not available!";
+                return RedirectToAction("IndexBook");
             }
 
-            model.Book = _context.Books.FirstOrDefault(b => b.BookId == model.BookId);
-            return View(model);
+            return View(book);
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmLoan(int bookId)
+        {
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.BookId == bookId);
+            if (book == null || book.TotalCopies <= 0)
+            {
+                TempData["ErrorMessage"] = "Book not available";
+                return RedirectToAction("IndexBook");
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "User not found. Please log in again.";
+                return RedirectToAction("IndexBook");
+            }
+
+            var loan = new BookLoan
+            {
+                BookId = bookId,
+                UserId = user.Id,
+                BorrowDate = DateTime.Now,
+                ReturnDate = DateTime.Now.AddDays(7),  
+            };
+
+            _context.BookLoan.Add(loan);
+
+            book.AvailableCopies -= 1;
+            _context.Books.Update(book);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("BorrowDetails", new { id = loan.BookLoanId });
+        }
+
+
+        public async Task<IActionResult> BorrowDetails(int id)
+        {
+            var loan = await _context.BookLoan
+                .Include(bl => bl.Book)
+                .Include(bl => bl.User)
+                .FirstOrDefaultAsync(bl => bl.BookLoanId == id);
+
+            if (loan == null)
+            {
+                return NotFound();
+            }
+
+            return View(loan);
+        }
+        public async Task<IActionResult> BorrowList()
+        {
+            var allLoans = await _context.BookLoan
+                .Include(bl => bl.Book)
+                .Include(bl => bl.User)
+                .ToListAsync();
+
+            return View(allLoans);
+        }
 
     }
 }

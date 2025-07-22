@@ -1,7 +1,11 @@
-﻿@model Library_Management_System.ViewModel.BookLoanViewModel
+﻿@model Library_Management_System.Models.BookLoan
 
-<h2>Borrow Details</h2>
+<h2>Loan Details</h2>
 
-<p><strong>Book:</strong> @Model.Book.Title</p>
-<p><strong>Borrow Date:</strong> @Model.BorrowDate.ToShortDateString()</p>
-<p><strong>Return Date:</strong> @Model.ReturnDate.ToShortDateString()</p>
+<p><strong>Book Title:</strong> @Model.Book.Title</p>
+<p><strong>Author:</strong> @Model.Book.Author</p>
+<p><strong>Borrow Date:</strong> @Model.BorrowDate.ToString("dd MMM yyyy")</p>
+<p><strong>Return Date:</strong> @Model.ReturnDate?.ToString("dd MMM yyyy")</p>
+<p><strong>Borrowed By User Id:</strong> @Model.User.UserName</p>
+
+<a asp-action="IndexBook">Back to Book List</a>

@@ -1,0 +1,38 @@
+﻿@model List<Library_Management_System.Models.BookLoan>
+
+<h2>Borrow List</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No borrow records found.</p>
+}
+else
+{
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse;">
+        <thead style="background-color: #f2f2f2;">
+            <tr>
+                <th>#</th>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Borrow Date</th>
+                <th>Return Date</th>
+                <th>Username</th>
+                <th>User Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@Model[i].Book?.Title</td>
+                    <td>@Model[i].Book?.Author</td>
+                    <td>@Model[i].BorrowDate.ToString("dd MMM yyyy")</td>
+                    <td>@Model[i].ReturnDate?.ToString("dd MMM yyyy")</td>
+                    <td>@Model[i].User?.UserName</td>
+                    <td>@Model[i].User?.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

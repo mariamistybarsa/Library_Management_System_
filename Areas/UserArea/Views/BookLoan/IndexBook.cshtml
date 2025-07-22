@@ -1,0 +1,36 @@
+﻿@model List<Library_Management_System.Models.Book>
+
+<h2>Available Books</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div style="color:red">@TempData["ErrorMessage"]</div>
+}
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Total Copies</th>
+            <th>Action</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.AvailableCopies</td>
+                <td>
+                    <a asp-action="LoanBook" asp-route-id="@book.BookId">Loan Book</a>
+                </td>
+              
+              
+             
+            </tr>
+        }
+    </tbody>
+</table>

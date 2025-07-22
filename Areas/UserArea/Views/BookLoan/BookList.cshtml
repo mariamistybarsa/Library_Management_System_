@@ -25,12 +25,21 @@
                     <!-- Borrow Button -->
                     <a asp-area="UserArea"
                        asp-controller="BookLoan"
-                       asp-action="BorrowCreate"
+                       asp-action="LoanBook"
                        asp-route-id="@book.BookId"
-                       class="btn btn-sm btn-primary">
-                        Borrow
+                       class="btn btn-sm btn-primary"
+                       title="Borrow this book">
+                        <i class="bi bi-book"></i> Borrow
                     </a>
-
+                    <a asp-area="UserArea"
+                       asp-controller="BookLoan"
+                       asp-action="IndexBook"
+                       asp-route-id="@book.BookId"
+                       class="btn btn-sm btn-primary"
+                       title="Borrow this book">
+                        <i class="bi bi-book"></i> Index
+                    </a>
+                
 
                 </div>
 

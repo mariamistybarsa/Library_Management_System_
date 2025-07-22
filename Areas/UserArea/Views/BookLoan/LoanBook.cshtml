@@ -1,0 +1,11 @@
+﻿@model Library_Management_System.Models.Book
+
+<h2>Loan Book</h2>
+
+<p>Are you sure you want to loan the book: <strong>@Model.Title</strong> by @Model.Author?</p>
+
+<form asp-action="ConfirmLoan" method="post">
+    <input type="hidden" name="bookId" value="@Model.BookId" />
+    <button type="submit">Confirm Loan</button>
+    <a asp-action="Index">Cancel</a>
+</form>

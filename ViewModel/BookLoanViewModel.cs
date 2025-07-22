@@ -1,4 +1,6 @@
-﻿using Library_Management_System.Models;
+﻿//BookLoanViewModel
+
+using Library_Management_System.Models;
 
 namespace Library_Management_System.ViewModel
 {
@@ -6,10 +8,10 @@ namespace Library_Management_System.ViewModel
     {
 
         public int BookId { get; set; }
+        public Book Book { get; set; } // এইটা শুধুই View purposes এর জন্য, তাই validation optional হওয়া উচিত
 
-        public Book Book { get; set; } 
 
-        public string UserId { get; set; }
+
 
         public DateTime BorrowDate { get; set; }
 
